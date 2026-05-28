@@ -1,6 +1,6 @@
 {
   "name": "agent-ready",
-  "description": "Scan any URL for AI agent readability against the Vercel Agent Readability Spec, llmstxt.org, and agent-protocol manifests (MCP, A2A, agents.json, agent-permissions, UCP, x402, NLWeb). 60 checks with per-check fix guidance.",
+  "description": "Lighthouse-for-agents inside Cursor: scan any URL for AI agent readability (Vercel spec, llms.txt, MCP, A2A, and more) and get per-check fix guidance.",
   "version": "1.0.0",
   "author": {
     "name": "Agent Ready",
