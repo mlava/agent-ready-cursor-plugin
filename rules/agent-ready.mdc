@@ -1,0 +1,70 @@
+---
+description: When and how to audit a website's AI / agent readability with Agent Ready (MCP server + REST fallback).
+alwaysApply: false
+---
+
+# Agent Ready — pick the right tool
+
+Agent Ready scans a public URL against the Vercel Agent Readability Spec, the
+llmstxt.org standard, and seven agent-protocol manifests, and returns a 0–100
+score plus per-check `howToFix` strings. Reach for it whenever the user asks
+how AI-readable a site is, mentions `llms.txt` / `AGENTS.md` / `/.well-known/mcp.json`
+/ `agents.json` / `agent-permissions.json` / UCP / x402 / NLWeb, or wants a
+prioritised list of fixes to make a site more visible to AI agents and AI search.
+
+It does **not** edit the target site — pair it with a code-editing MCP tool
+(or have the user edit by hand) to land the fixes.
+
+## Two paths (this plugin bundles the MCP server only)
+
+- **MCP server (preferred when connected)** — the bundled `agent-ready` server
+  exposes native tools. Requires `AGENT_READY_API_KEY` in the environment for
+  `scan_site` and `get_scan`. Issue a Pro key at
+  https://agent-ready.dev/dashboard/api-keys. The `ask` tool is public — no key.
+- **REST API (manual fallback)** — `https://agent-ready.dev/api/v1/*` works with
+  the same bearer token if you can't run the MCP server. OpenAPI spec at
+  `https://agent-ready.dev/api/v1/openapi.json`.
+
+Never scrape the website UI — call the JSON API (or MCP tools).
+
+## Pick the right tool
+
+| The user wants… | Tool (MCP) | REST endpoint |
+|---|---|---|
+| A fresh agent-readability scan of a URL | `scan_site` | `POST /api/v1/scans` |
+| Fetch a previously started scan by id | `get_scan` | `GET /api/v1/scans/{id}` |
+| Search Agent Ready's own methodology / check registry / specs | `ask` | `POST /api/v1/ask` |
+
+For end-to-end workflows, the server also exposes three prompts that wire the
+tools together:
+
+- `scan` — fresh scan + high-level summary
+- `interpret_scan` — plain-English explanation of a scan's findings
+- `remediation_plan` — prioritised fix-it doc (optional `focus`: `"seo"` or `"agents"`)
+
+If the user describes one of these flows, surface the prompt name rather than
+reconstructing the workflow yourself.
+
+## Rules of engagement
+
+- Pass the user's URL **verbatim** — including scheme, path, and trailing slash.
+  The server normalises and will reject private / reserved IPs at the network
+  layer, so invalid URLs surface as a clear `invalid_request` error.
+- `scan_site` returns either the full result or `{ id, status: "running", pollUrl }`
+  if the scan hasn't completed within the poll deadline (~60 s). On a `running`
+  placeholder, **don't loop `get_scan`** — surface the id and offer to fetch later.
+- **Don't dump raw JSON.** A scan payload has 50+ checks. Lead with the overall
+  score + rating band, then the 3–5 highest-impact `status: "fail"` checks, then
+  one next step.
+- Each failing check carries a `howToFix` string — use it verbatim or paraphrase
+  tightly; never invent fix guidance.
+- **Check-id prefixes group the findings:** S1–S15 (site-wide), P1–P23 (per-page),
+  L1–L10 (llms.txt content), C1–C12 (agent-protocol manifests). C-series checks
+  *drop* (not fail) when the relevant endpoint is absent — don't report a missing
+  C-check as a problem unless the user asked about that protocol.
+- **Never fabricate a scan id.** If the user references an id you don't have
+  evidence of, call `get_scan` first. A 404 is a clearer signal than a
+  hallucinated scan.
+
+Full agent guide: https://agent-ready.dev/AGENTS.md · methodology:
+https://agent-ready.dev/methodology · check registry: https://agent-ready.dev/checks

@@ -1,0 +1,28 @@
+{
+  "name": "agent-ready",
+  "description": "Scan any URL for AI agent readability against the Vercel Agent Readability Spec, llmstxt.org, and agent-protocol manifests (MCP, A2A, agents.json, agent-permissions, UCP, x402, NLWeb). 60 checks with per-check fix guidance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Agent Ready",
+    "email": "support@agent-ready.dev"
+  },
+  "homepage": "https://agent-ready.dev",
+  "repository": "https://github.com/mlava/agent-ready-cursor-plugin",
+  "license": "MIT",
+  "keywords": [
+    "ai-readability",
+    "agent-readiness",
+    "llms-txt",
+    "agents-md",
+    "mcp",
+    "a2a",
+    "vercel-spec",
+    "scanner",
+    "seo",
+    "ai-search"
+  ],
+  "logo": "assets/logo.png",
+  "mcpServers": "mcp.json",
+  "skills": "skills",
+  "rules": "rules"
+}

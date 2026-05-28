@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "agent-ready": {
+      "command": "npx",
+      "args": ["-y", "agent-ready-mcp@latest"],
+      "env": {
+        "AGENT_READY_API_KEY": "${AGENT_READY_API_KEY}"
+      }
+    }
+  }
+}
