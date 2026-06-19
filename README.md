@@ -3,7 +3,7 @@
 Scan any URL for **AI agent readability** directly inside Cursor — against the
 Vercel Agent Readability Spec, the [llmstxt.org](https://llmstxt.org) standard,
 and seven agent-protocol manifests (MCP server cards, A2A agent cards,
-`agents.json`, `agent-permissions.json`, UCP, x402, NLWeb). 60 checks across
+`agents.json`, `agent-permissions.json`, UCP, x402, NLWeb). ~70 checks across
 four spec families with per-check `howToFix` guidance.
 
 Backed by [agent-ready.dev](https://agent-ready.dev) — the same engine behind
