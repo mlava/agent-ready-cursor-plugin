@@ -29,10 +29,11 @@ Install from the [Cursor Marketplace](https://cursor.com/marketplace) (search
 That copies the plugin into `~/.cursor/plugins/local/agent-ready/`. Then
 **Cmd+Shift+P → Developer: Reload Window** in Cursor.
 
-## Configure your API key
+## Configure your API key (optional)
 
-`scan_site` and `get_scan` need an Agent Ready Pro API key. The `ask` tool is
-public — no key.
+`scan_site` works with no key on the free anonymous tier (3 scans per 30 days
+per IP, 25-page depth), and `ask` is public. A Pro key is only needed for
+`get_scan` (scan history) and to deepen scans to 250 pages at higher volume.
 
 1. Issue a Pro key at https://agent-ready.dev/dashboard/api-keys.
 2. Set `AGENT_READY_API_KEY` in your shell, **or** put the literal key in
