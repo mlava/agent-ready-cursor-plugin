@@ -32,10 +32,12 @@ edit the target site — pair it with a code-editing tool to land fixes.
 - `ask` — natural-language search over Agent Ready's methodology, check
   registry, and validated specs. **Public; no API key.** Use it for questions
   *about* Agent Ready (how the score works, what a check does).
-- `scan_site` — scan a live URL; returns scores + per-check findings. **Needs a
-  Pro API key.**
+- `scan_site` — scan a live URL; returns scores + per-check findings. **Works
+  without a key** (anonymous free tier, 25-page cap); a Pro key unlocks 250-page
+  scans and higher volume.
 - `get_scan` — fetch a previous scan by id (e.g. to poll one still running).
-  **Needs a Pro API key.**
+  **Needs a Pro API key** (scan history is account-scoped; keyless `scan_site`
+  returns its full result inline).
 
 ## Install
 
@@ -44,11 +46,12 @@ Install from the [Cursor Marketplace](https://cursor.com/marketplace) (search
 
 ## Configuration
 
-`scan_site` and `get_scan` require a Pro API key from
-<https://agent-ready.dev/dashboard/api-keys>. Set `AGENT_READY_API_KEY` in your
-shell, or paste the literal key into the installed
-`~/.cursor/plugins/local/agent-ready/mcp.json` (never the repo copy). The `ask`
-tool needs no key.
+`scan_site` works with no key on the anonymous free tier; `ask` is public too.
+`get_scan` requires a Pro API key from
+<https://agent-ready.dev/dashboard/api-keys> (which also deepens scans to 250
+pages and raises limits). Set `AGENT_READY_API_KEY` in your shell, or paste the
+literal key into the installed
+`~/.cursor/plugins/local/agent-ready/mcp.json` (never the repo copy).
 
 ## Usage
 

@@ -18,9 +18,10 @@ It does **not** edit the target site — pair it with a code-editing MCP tool
 ## Two paths (this plugin bundles the MCP server only)
 
 - **MCP server (preferred when connected)** — the bundled `agent-ready` server
-  exposes native tools. Requires `AGENT_READY_API_KEY` in the environment for
-  `scan_site` and `get_scan`. Issue a Pro key at
-  https://agent-ready.dev/dashboard/api-keys. The `ask` tool is public — no key.
+  exposes native tools. `scan_site` and `ask` work with no key (scan uses the
+  anonymous free tier, 25-page cap); `get_scan` needs `AGENT_READY_API_KEY` in
+  the environment, and a Pro key also deepens scans to 250 pages. Issue one at
+  https://agent-ready.dev/dashboard/api-keys.
 - **REST API (manual fallback)** — `https://agent-ready.dev/api/v1/*` works with
   the same bearer token if you can't run the MCP server. OpenAPI spec at
   `https://agent-ready.dev/api/v1/openapi.json`.
